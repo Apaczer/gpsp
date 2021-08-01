@@ -309,7 +309,6 @@ void translate_icache_sync() {
         {                                                                     \
           /* MUL rd, rm, rs */                                                \
           arm_multiply(no, no);                                               \
-          cycle_count += 2;  /* variable 1..4, pick 2 as an aprox. */         \
         }                                                                     \
       }                                                                       \
       else                                                                    \
@@ -327,7 +326,6 @@ void translate_icache_sync() {
           case 0:                                                             \
             /* MULS rd, rm, rs */                                             \
             arm_multiply(no, yes);                                            \
-            cycle_count += 2;  /* variable 1..4, pick 2 as an aprox. */       \
             break;                                                            \
                                                                               \
           case 1:                                                             \
@@ -365,7 +363,6 @@ void translate_icache_sync() {
         {                                                                     \
           /* MLA rd, rm, rs, rn */                                            \
           arm_multiply(yes, no);                                              \
-          cycle_count += 3;  /* variable 2..5, pick 3 as an aprox. */         \
         }                                                                     \
       }                                                                       \
       else                                                                    \
@@ -383,7 +380,6 @@ void translate_icache_sync() {
           case 0:                                                             \
             /* MLAS rd, rm, rs, rn */                                         \
             arm_multiply(yes, yes);                                           \
-            cycle_count += 3;  /* variable 2..5, pick 3 as an aprox. */       \
             break;                                                            \
                                                                               \
           case 1:                                                             \
@@ -503,7 +499,6 @@ void translate_icache_sync() {
         {                                                                     \
           /* UMULL rd, rm, rs */                                              \
           arm_multiply_long(u64, no, no);                                     \
-          cycle_count += 3;  /* this is an aproximation :P */                 \
         }                                                                     \
       }                                                                       \
       else                                                                    \
@@ -521,7 +516,6 @@ void translate_icache_sync() {
           case 0:                                                             \
             /* UMULLS rdlo, rdhi, rm, rs */                                   \
             arm_multiply_long(u64, no, yes);                                  \
-            cycle_count += 3;  /* this is an aproximation :P */               \
             break;                                                            \
                                                                               \
           case 1:                                                             \
@@ -559,7 +553,6 @@ void translate_icache_sync() {
         {                                                                     \
           /* UMLAL rd, rm, rs */                                              \
           arm_multiply_long(u64_add, yes, no);                                \
-          cycle_count += 3;  /* Between 2 and 5 cycles? */                    \
         }                                                                     \
       }                                                                       \
       else                                                                    \
@@ -577,7 +570,6 @@ void translate_icache_sync() {
           case 0:                                                             \
             /* UMLALS rdlo, rdhi, rm, rs */                                   \
             arm_multiply_long(u64_add, yes, yes);                             \
-            cycle_count += 3;  /* Between 2 and 5 cycles? */                  \
             break;                                                            \
                                                                               \
           case 1:                                                             \
@@ -615,7 +607,6 @@ void translate_icache_sync() {
         {                                                                     \
           /* SMULL rd, rm, rs */                                              \
           arm_multiply_long(s64, no, no);                                     \
-          cycle_count += 2;  /* Between 1 and 4 cycles? */                    \
         }                                                                     \
       }                                                                       \
       else                                                                    \
@@ -633,7 +624,6 @@ void translate_icache_sync() {
           case 0:                                                             \
             /* SMULLS rdlo, rdhi, rm, rs */                                   \
             arm_multiply_long(s64, no, yes);                                  \
-            cycle_count += 2;  /* Between 1 and 4 cycles? */                  \
             break;                                                            \
                                                                               \
           case 1:                                                             \
@@ -671,7 +661,6 @@ void translate_icache_sync() {
         {                                                                     \
           /* SMLAL rd, rm, rs */                                              \
           arm_multiply_long(s64_add, yes, no);                                \
-          cycle_count += 3;  /* Between 2 and 5 cycles? */                    \
         }                                                                     \
       }                                                                       \
       else                                                                    \
@@ -689,7 +678,6 @@ void translate_icache_sync() {
           case 0:                                                             \
             /* SMLALS rdlo, rdhi, rm, rs */                                   \
             arm_multiply_long(s64_add, yes, yes);                             \
-            cycle_count += 3;  /* Between 2 and 5 cycles? */                  \
             break;                                                            \
                                                                               \
           case 1:                                                             \
@@ -1894,7 +1882,6 @@ void translate_icache_sync() {
         case 0x01:                                                            \
           /* MUL rd, rs */                                                    \
           thumb_data_proc(alu_op, muls, reg, rd, rd, rs);                     \
-          cycle_count += 2;  /* Between 1 and 4 extra cycles */               \
           break;                                                              \
                                                                               \
         case 0x02:                                                            \
