@@ -1375,7 +1375,7 @@ u32 menu(u16 *original_screen)
 
   void submenu_main()
   {
-		print_string("Ported to Bittboy by Gameblabla", COLOR_ROM_INFO, COLOR_BG, 6, 184);
+		print_string("Port by gameblabla, changes by rik-smeets & Apaczer", COLOR_ROM_INFO, COLOR_BG, 6, 184);
 	  
 		strncpy(print_buffer, gamepak_filename, 80);
 		print_string(print_buffer, COLOR_ROM_INFO, COLOR_BG, 6, 10);
