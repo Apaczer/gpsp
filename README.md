@@ -3,11 +3,19 @@ An enhanced version of gpSP for PowKiddy and Bittboy devices.
 
 ## How to install
 *Note: in these instructions, it is presumed you use the [MiyooCFW](https://github.com/TriForceX/MiyooCFW/) custom firmware on your device.*
-1. Download the latest release ZIP-file over at [Releases](https://github.com/rik-smeets/gpsp/releases/latest).
-2. Copy the `gpsp_rumble.elf` file from the folder matching your device brand (i.e. PowKiddy or Bittboy).
-3. Replace the existing `gpsp_rumble.elf` file in `main\emus\gpsp_rumble` with the downloaded version.
+1. Download the latest release ZIP-file over at [Releases](https://github.com/Apaczer/gpsp/releases/latest).
+2. Copy the `gpsp.zip` content to ``/mnt`` folder on your device (possibly Powkiddy as button mapping matches for those devices).
+3. Remember to include ``gba_bios.bin`` in ``/mnt/gpsp`` folder for that emulator to work
 
 ## Changelog
+### v1.2.1
+#### Features
+- add "borders" option to this port, that is triggering overlay image over unscaled video screen with border.png put inside ./gpsp directory (set ``Display scalling->unscaled 3:2`` in menu to make it visible).
+
+#### Fixes
+- reduce tearing by enabling Doublebuffering in all video modes (hardcoded)
+- eliminate audio underruns in sound_callback (reduces audio freezes)
+
 ### v1.2
 #### Improvements
 - Improve unfiltered video upscaling
