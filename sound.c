@@ -610,13 +610,15 @@ void sound_callback(void *userdata, Uint8 *stream, int length)
   s16 *source;
   s32 current_sample;
 
+	if (((gbc_sound_buffer_index - sound_buffer_base) % BUFFER_SIZE) < length && !sound_exit_flag) return;
+
   SDL_LockMutex(sound_mutex);
 
-  while(((gbc_sound_buffer_index - sound_buffer_base) % BUFFER_SIZE) <
-   length && !sound_exit_flag)
-  {
-    SDL_CondWait(sound_cv, sound_mutex);
-  }
+//  while(((gbc_sound_buffer_index - sound_buffer_base) % BUFFER_SIZE) <
+//   length && !sound_exit_flag)
+//  {
+//    SDL_CondWait(sound_cv, sound_mutex);
+//  }
 
   if(global_enable_audio)
   {
