@@ -3402,7 +3402,7 @@ void flush_translation_cache_ram()
    flush_ram_count, reg[REG_PC], iwram_code_min, iwram_code_max,
    ewram_code_min, ewram_code_max); */
 
-#ifndef PC_BUILD
+#if !defined(PC_BUILD) && !defined(MIYOO)
   invalidate_icache_region(ram_translation_cache,
    (ram_translation_ptr - ram_translation_cache) + 0x100);
 #endif
@@ -3459,7 +3459,7 @@ void flush_translation_cache_ram()
 
 void flush_translation_cache_rom()
 {
-#ifndef PC_BUILD
+#if !defined(PC_BUILD) && !defined(MIYOO)
   invalidate_icache_region(rom_translation_cache,
    rom_translation_ptr - rom_translation_cache + 0x100);
 #endif
@@ -3473,7 +3473,7 @@ void flush_translation_cache_rom()
 
 void flush_translation_cache_bios()
 {
-#ifndef PC_BUILD
+#if !defined(PC_BUILD) && !defined(MIYOO)
   invalidate_icache_region(bios_translation_cache,
    bios_translation_ptr - bios_translation_cache + 0x100);
 #endif

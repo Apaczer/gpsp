@@ -1,16 +1,22 @@
-# gpSP for PowKiddy & Bittboy
-An enhanced version of gpSP for PowKiddy and Bittboy devices. 
+# gpSP for MiyooCFW
+An enhanced version of gpSP for low-level ARM devices.
 
 ## How to install
 *Note: in these instructions, it is presumed you use the [MiyooCFW](https://github.com/TriForceX/MiyooCFW/) custom firmware on your device.*
-1. Download the latest release ZIP-file over at [Releases](https://github.com/Apaczer/gpsp/releases/latest).
-2. Copy the `gpsp.zip` content to ``/mnt`` folder on your device (possibly Powkiddy as button mapping matches for those devices).
-3. Remember to include ``gba_bios.bin`` in ``/mnt/gpsp`` folder for that emulator to work
+1. Download the latest release ZIP-file or IPK-package over at [Releases](https://github.com/Apaczer/gpsp/releases/latest).
+2. **ZIP:** Extract the `gpsp*.zip` content to ``$HOME`` directory on your device (possibly Powkiddy as button mapping matches for those devices).  
+
+	**IPK:** Launch gpsp.ipk from GMenu2X's Explorer.
+3. It is mandatory to include ``gba_bios.bin`` in working directory to make any ROM launch (emulator comes bundled with fake BIOS).
 
 ## Changelog
 ### v1.2.1
+#### Fixes
+- correct button mapping to accommodate for latest 2.0 CFW (universal aka PocketGO)
+
+### v1.2.1
 #### Features
-- add "borders" option to this port, that is triggering overlay image over unscaled video screen with border.png put inside ./gpsp directory (set ``Display scalling->unscaled 3:2`` in menu to make it visible).
+- add "borders" option to this port, that is triggering overlay image over unscaled video screen with border.png put inside working directory (set ``Display scalling->unscaled 3:2`` in menu to make it visible).
 
 #### Fixes
 - reduce tearing by enabling Doublebuffering in all video modes (hardcoded)
@@ -49,8 +55,8 @@ See [./readme.txt](./readme.txt)
 - the other people mentioned in the changelog who shared improvements for gpSP
 
 ## How to build
-0. Build the BittBoy toolchain as described [here](https://github.com/TriForceX/MiyooCFW/wiki/Making-Games). Follow the steps up to (and including) step 3.
-0. You can now build gpSP as described [here](./build.txt).
+0. Build the MiyooCFW shared uClibc SDK from [buildroot](https://github.com/MiyooCFW/buildroot).
+0. You can now build gpSP from `./miyoo/Makefile` with `make`
 
 ### Optimizing your build
 0. The build binaries will not be optimized for your device yet. First, use your emulator build on your device. Test some games and some features of the emulator. You'll probably notice a suboptimal performance. 

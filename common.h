@@ -35,7 +35,7 @@
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
 
-#ifdef BITTBOY
+#ifdef MIYOO
 	#include <fcntl.h>
 	#include <unistd.h>
 	#include <signal.h>
@@ -270,7 +270,7 @@ typedef u32 fixed8_24;
   #define printf pspDebugScreenPrintf
 #endif
 
-#ifdef PC_BUILD
+#if defined(PC_BUILD) || defined(MIYOO) 
   #define STDIO_DEBUG
   //#define REGISTER_USAGE_ANALYZE
 #endif

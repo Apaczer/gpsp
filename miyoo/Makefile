@@ -15,7 +15,7 @@ BIN       = gpsp
 # Platform specific definitions 
 
 VPATH      += .. ../arm
-CFLAGS     += -DARM_ARCH -DPC_BUILD -DBITTBOY -DPOWKIDDY -Wall
+CFLAGS     += -DARM_ARCH -DMIYOO -Wall
 CFLAGS  += -march=armv5te -mtune=arm926ej-s -Ofast `/opt/miyoo/arm-miyoo-linux-uclibcgnueabi/sysroot/usr/bin/sdl-config --cflags`
 LIBS       = -nodefaultlibs -lc -lgcc -lSDL -lpng -lasound -lz -Wl,--as-needed -Wl,--gc-sections -flto -s
 

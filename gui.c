@@ -759,7 +759,7 @@ u32 gamepad_config_line_to_button[] =
 
 #endif
 
-#ifdef PC_BUILD
+#if defined(PC_BUILD) || defined(MIYOO)  
 u32 gamepad_config_line_to_button[] =
  { 0, 2, 1, 3, 8, 9, 10, 11, 6, 7, 4, 5, 12, 13, 14, 15 };
 #endif
@@ -902,7 +902,7 @@ enum file_options {
   fo_main_option_count,
 };
 
-#ifdef PC_BUILD
+#if defined(PC_BUILD) || defined(MIYOO)  
 #define PLAT_BUTTON_COUNT 0
 #endif
 #define FILE_OPTION_COUNT (fo_main_option_count + PLAT_BUTTON_COUNT)
@@ -982,7 +982,7 @@ s32 load_config_file()
       // Sanity check: Make sure there's a MENU or FRAMESKIP
       // key, if not assign to triangle
 
-#ifndef PC_BUILD
+#if !defined(PC_BUILD) && !defined(MIYOO)
       u32 i;
       s32 menu_button = -1;
       for(i = 0; i < PLAT_BUTTON_COUNT; i++)
@@ -1069,7 +1069,7 @@ s32 save_config_file()
     file_options[fo_analog_sensitivity_level] = analog_sensitivity_level;
     file_options[fo_screen_filter2] = screen_filter2;
 
-#ifndef PC_BUILD
+#if !defined(PC_BUILD) && !defined(MIYOO)
     u32 i;
     for(i = 0; i < PLAT_BUTTON_COUNT; i++)
     {
@@ -1340,7 +1340,7 @@ u32 menu(u16 *original_screen)
 
   void menu_fix_gamepad_help()
   {
-#ifndef PC_BUILD
+#if !defined(PC_BUILD) && !defined(MIYOO)
     clear_help();
     current_option->help_string =
      gamepad_help[gamepad_config_map[
@@ -1644,7 +1644,7 @@ u32 menu(u16 *original_screen)
 
 #endif
 
-#if defined(PC_BUILD) || defined(RPI_BUILD)
+#if defined(PC_BUILD) || defined(MIYOO) || defined(RPI_BUILD)
 
   menu_option_type gamepad_config_options[] =
   {
@@ -1652,7 +1652,7 @@ u32 menu(u16 *original_screen)
     gamepad_config_option("D-pad down   ", 1),
     gamepad_config_option("D-pad left   ", 2),
     gamepad_config_option("D-pad right  ", 3),
-#ifdef POWKIDDY
+#ifdef MIYOO
     gamepad_config_option("B            ", 4),
     gamepad_config_option("A            ", 5),
 #else

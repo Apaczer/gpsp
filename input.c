@@ -68,7 +68,7 @@ u32 button_repeat = 0;
 gui_action_type cursor_repeat = CURSOR_NONE;
 
 
-#ifdef PC_BUILD
+#if defined(PC_BUILD) || defined(MIYOO)  
 u32 gamepad_config_map[12] =
 {
   BUTTON_ID_UP,                 // Analog up
@@ -618,7 +618,7 @@ u32 key_map(SDLKey key_sym)
 }
 #endif
 
-#if defined(PC_BUILD)
+#if defined(PC_BUILD) || defined(MIYOO) 
 
 extern u32 gamepad_config_line_to_button[];
 
@@ -724,7 +724,7 @@ u32 key_map(u32 key_sym)
 }
 
 #endif
-#if defined(PC_BUILD) || defined(RPI_BUILD)
+#if defined(PC_BUILD) || defined(MIYOO) || defined(RPI_BUILD)
 
 u32 joy_map(u32 button)
 {
@@ -786,7 +786,7 @@ gui_action_type get_gui_input()
           case SDLK_RIGHT:
             gui_action = CURSOR_RIGHT;
             break;
-#ifdef POWKIDDY
+#ifdef MIYOO
           case SDLK_ESCAPE:
           case SDLK_LCTRL:
             gui_action = CURSOR_EXIT;
@@ -917,7 +917,7 @@ u32 update_input()
         {
           quit();
         }*/
-#ifdef PC_BUILD
+#if defined(PC_BUILD) || defined(MIYOO) 
         if(event.key.keysym.sym == SDLK_RCTRL)
 #else
         if(event.key.keysym.sym == SDLK_F10)

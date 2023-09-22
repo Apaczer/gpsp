@@ -231,7 +231,7 @@ void init_main()
 
 extern void load_controllers();
 
-#ifdef BITTBOY
+#ifdef MIYOO
 int motordev=-1;
 #endif
 
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
   char bios_filename[512];
   int ret;
   
-  #ifdef BITTBOY
+  #ifdef MIYOO
   motordev = open("/dev/miyoo_vir", O_RDWR);
   #endif
 
@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
   delay_us(2500000);
 #endif
 
-#ifndef PC_BUILD
+#if !defined(PC_BUILD) && !defined(MIYOO)
   gpsp_plat_init();
 #endif
   load_config_file();
@@ -392,7 +392,7 @@ int main(int argc, char *argv[])
 #endif
 
 
-#ifdef BITTBOY
+#ifdef MIYOO
   if(motordev > 0){
     ioctl(motordev, MIYOO_VIR_SET_MODE, 1);
     close(motordev);
@@ -629,7 +629,7 @@ u32 update_gba()
           dispstat &= ~0x01;
           frame_ticks++;
 
-  #ifdef PC_BUILD
+#if defined(PC_BUILD) || defined(MIYOO)  
 /*        printf("frame update (%x), %d instructions total, %d RAM flushes\n",
            reg[REG_PC], instruction_count - last_frame, flush_ram_count);
           last_frame = instruction_count;
@@ -911,7 +911,7 @@ void quit()
 #else
   SDL_Quit();
 
-#ifndef PC_BUILD
+#if !defined(PC_BUILD) && !defined(MIYOO)
   gpsp_plat_quit();
 #endif
 
@@ -962,7 +962,7 @@ u32 file_length(char *dummy, FILE *fp)
   return length;
 }
 
-#ifdef PC_BUILD
+#if defined(PC_BUILD) || defined(MIYOO)  
 
 void delay_us(u32 us_count)
 {

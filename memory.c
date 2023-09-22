@@ -1478,7 +1478,7 @@ u32 encode_bcd(u8 value)
   address16(map, update_address & 0x7FFF) = _value                            \
 
 
-#ifdef BITTBOY
+#ifdef MIYOO
 extern int motordev;
 #endif
 
@@ -1501,7 +1501,7 @@ void function_cc write_rtc(u32 address, u32 value)
       if(rtc_registers[1] & 8){
         if((value & 8) != rumble){
           rumble = value & 8;
-          #ifdef BITTBOY
+          #ifdef MIYOO
           if(motordev > 0){
             ioctl(motordev, MIYOO_VIR_SET_MODE, rumble > 0 ? 0 : 1);
           }
