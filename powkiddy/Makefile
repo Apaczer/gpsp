@@ -5,7 +5,7 @@
 
 # Global definitions
 
-CC        = /opt/bittboy-toolchain/usr/bin/arm-linux-gcc
+CC        = /opt/miyoo/bin/arm-linux-gcc
 
 OBJS      = main.o cpu.o memory.o video.o input.o sound.o gui.o \
             cheats.o zip.o arm_stub.o  warm.o cpu_threaded.o video_blend.o sha1.o imageio.o
@@ -16,12 +16,7 @@ BIN       = gpsp
 
 VPATH      += .. ../arm
 CFLAGS     += -DARM_ARCH -DPC_BUILD -DBITTBOY -DPOWKIDDY -Wall
-CFLAGS     += -Ofast -fdata-sections -ffunction-sections -fsingle-precision-constant -fno-PIC -flto -march=armv5te -mtune=arm926ej-s -fprofile-generate=./profile
-CFLAGS     += `/opt/bittboy-toolchain/arm-buildroot-linux-musleabi/sysroot/usr/bin/sdl-config --cflags`
-LDFLAGS    =-lgcov
-
-# expecting to have PATH set up to get correct sdl-config first
-
+CFLAGS  += -march=armv5te -mtune=arm926ej-s -Ofast `/opt/miyoo/arm-miyoo-linux-uclibcgnueabi/sysroot/usr/bin/sdl-config --cflags`
 LIBS       = -nodefaultlibs -lc -lgcc -lSDL -lpng -lasound -lz -Wl,--as-needed -Wl,--gc-sections -flto -s
 
 # Compilation:
