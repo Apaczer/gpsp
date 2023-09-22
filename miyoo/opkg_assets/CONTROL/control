@@ -1,0 +1,7 @@
+Package: gpSP
+Version: 1.2.2
+Description: gpSP - Game Boy Advance emulator from exophase
+Section: emulators
+Priority: optional
+Maintainer: Apacz
+Architecture: arm

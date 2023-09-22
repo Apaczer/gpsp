@@ -9,6 +9,10 @@ tags
 cscope.out
 pandora/linux
 miyoo/gpsp
+miyoo/assets/game_config.txt
+miyoo/package
+miyoo/*.zip
+miyoo/*.ipk
 x86/*.txt
 x86/*.cfg
 x86/gpsp

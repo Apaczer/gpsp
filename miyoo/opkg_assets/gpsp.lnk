@@ -1,0 +1,4 @@
+title=gpSP
+description=gpSP - GameBoy Advance emulator with dynarec
+exec=/mnt/emus/gpsp/gpsp
+selectordir=/mnt/roms/GBA
