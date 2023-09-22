@@ -694,10 +694,10 @@ u32 key_map(u32 key_sym)
     case SDLK_RIGHT:
       return tokey(3);
       
-    case SDLK_LCTRL:
+    case SDLK_LALT:
       return tokey(4);
 
-    case SDLK_LALT:
+    case SDLK_LCTRL:
       return tokey(5);
       
     case SDLK_LSHIFT:
