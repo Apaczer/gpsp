@@ -85,6 +85,9 @@ ipk: package
 	@mv $(RELEASEDIR)/* .$(HOMEPATH) && mv .$(HOMEPATH) $(RELEASEDIR)
 	@mkdir -p $(RELEASEDIR)/data
 	@mv $(RELEASEDIR)$(HOMEPATH) $(RELEASEDIR)/data/
+	@echo "#!/bin/sh\nsync; echo 'Installing new $(TARGET)..'; rm /var/lib/opkg/info/$(TARGET).list; exit 0" > $(OPKG_ASSETSDIR)/CONTROL/preinst
+	@echo "#!/bin/sh\nsync; echo 'Installation finished.'; echo 'Restarting $(TARGET)..'; sleep 1; killall $(TARGET); exit 0" > $(OPKG_ASSETSDIR)/CONTROL/postinst
+	@chmod +x $(OPKG_ASSETSDIR)/CONTROL/postinst $(OPKG_ASSETSDIR)/CONTROL/preinst
 	@cp -r $(OPKG_ASSETSDIR)/CONTROL $(RELEASEDIR)
 	@sed "s/^Version:.*/Version: $(VERSION)/" $(OPKG_ASSETSDIR)/CONTROL/control > $(RELEASEDIR)/CONTROL/control
 	@echo 2.0 > $(RELEASEDIR)/debian-binary

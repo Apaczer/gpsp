@@ -1,0 +1,2 @@
+#!/bin/sh
+sync; echo 'Installing new gpsp..'; rm /var/lib/opkg/info/gpsp.list; exit 0

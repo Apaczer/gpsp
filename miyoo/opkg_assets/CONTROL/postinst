@@ -1,0 +1,2 @@
+#!/bin/sh
+sync; echo 'Installation finished.'; echo 'Restarting gpsp..'; sleep 1; killall gpsp; exit 0
