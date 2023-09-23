@@ -72,6 +72,8 @@ package: all config
 	@cp $(OPKG_ASSETSDIR)/$(LINK) $(RELEASEDIR)/gmenu2x/sections/$(SECTION)
 	@sed "s/^exec=.*/exec=\$(HOMEPATH)\/$(DESTDIR)\/$(TARGET)\/$(TARGET)/" $(OPKG_ASSETSDIR)/$(LINK) > $(RELEASEDIR)/gmenu2x/sections/$(SECTION)/$(LINK)
 	@cp $(OPKG_ASSETSDIR)/$(ALIASES) $(RELEASEDIR)/$(DESTDIR)/$(TARGET)
+#use one of overlays as default border for unscaled image
+	@cp ../borders/border1.png $(RELEASEDIR)/$(DESTDIR)/$(TARGET)/border.png
 
 zip: package
 	@cd $(RELEASEDIR) && zip -rq $(TARGET)$(VERSION).zip ./* && mv *.zip ..
