@@ -19,6 +19,9 @@ ALIASES = aliases.txt
 
 CC        = /opt/miyoo/bin/arm-linux-gcc
 
+# Possible values : 0, YES, APPLY
+PROFILE ?= 0
+
 OBJS      = main.o cpu.o memory.o video.o input.o sound.o gui.o \
             cheats.o zip.o arm_stub.o  warm.o cpu_threaded.o video_blend.o sha1.o imageio.o
 
@@ -27,9 +30,20 @@ BIN       = $(TARGET)
 # Platform specific definitions 
 
 VPATH      += .. ../arm
+CFLAGS     = -Ofast -fdata-sections -ffunction-sections -fsingle-precision-constant -fno-PIC -flto
 CFLAGS     += -DARM_ARCH -DMIYOO -Wall
-CFLAGS  += -march=armv5te -mtune=arm926ej-s -Ofast `/opt/miyoo/arm-miyoo-linux-uclibcgnueabi/sysroot/usr/bin/sdl-config --cflags`
+CFLAGS     += -march=armv5te -mtune=arm926ej-s `/opt/miyoo/arm-miyoo-linux-uclibcgnueabi/sysroot/usr/bin/sdl-config --cflags`
 LIBS       = -nodefaultlibs -lc -lgcc -lSDL -lpng -lasound -lz -Wl,--as-needed -Wl,--gc-sections -flto -s
+
+ifeq ($(PROFILE), YES)
+LIBS       += -lgcov
+endif
+
+ifeq ($(PROFILE), YES)
+CFLAGS	+= -fprofile-generate=$(HOMEPATH)/profile
+else ifeq ($(PROFILE), APPLY)
+CFLAGS	+= -fprofile-use -fbranch-probabilities
+endif
 
 # Compilation:
 
@@ -48,6 +62,7 @@ config:
 	@cat ../game_config.txt > $(ASSETSDIR)/game_config.txt
 
 package: all config
+	@rm -rf $(RELEASEDIR)
 	@mkdir -p $(RELEASEDIR)
 	@cp *$(TARGET) $(RELEASEDIR)/
 	@mkdir -p $(RELEASEDIR)/$(DESTDIR)/$(TARGET)
@@ -60,7 +75,8 @@ package: all config
 
 zip: package
 	@cd $(RELEASEDIR) && zip -rq $(TARGET)$(VERSION).zip ./* && mv *.zip ..
-	@rm -rf $(RELEASEDIR)
+	@rm -rf $(RELEASEDIR)/*
+	mv $(TARGET)*.zip $(RELEASEDIR)/
 
 ipk: package
 	@mkdir -p .$(HOMEPATH)
@@ -73,7 +89,8 @@ ipk: package
 	@tar --owner=0 --group=0 -czvf $(RELEASEDIR)/data.tar.gz -C $(RELEASEDIR)/data/ . >/dev/null 2>&1
 	@tar --owner=0 --group=0 -czvf $(RELEASEDIR)/control.tar.gz -C $(RELEASEDIR)/CONTROL/ . >/dev/null 2>&1
 	@ar r $(TARGET).ipk $(RELEASEDIR)/control.tar.gz $(RELEASEDIR)/data.tar.gz $(RELEASEDIR)/debian-binary
-	@rm -rf $(RELEASEDIR)
+	@rm -rf $(RELEASEDIR)/*
+	mv $(TARGET).ipk $(RELEASEDIR)/
 
 clean:
 	rm -f *.o $(BIN)
