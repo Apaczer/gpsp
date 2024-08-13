@@ -55,12 +55,13 @@ See [./readme.txt](./readme.txt)
 - the other people mentioned in the changelog who shared improvements for gpSP
 
 ## How to build
-0. Build the MiyooCFW shared uClibc SDK from [buildroot](https://github.com/MiyooCFW/buildroot).
-0. You can now build gpSP from `./miyoo/Makefile` with `make`
+1. Build the (preferably) static SDK from [buildroot](https://github.com/MiyooCFW/buildroot) or use the docker containters.
+2. You can now build gpSP from `./miyoo/Makefile` with `make` (dependencies are: SDL-1.2, zlib)
+3. Be sure to include `game_config.txt` and `gba_bios.bin`
 
 ### Optimizing your build
-0. The build binaries will not be optimized for your device yet. First, use your emulator build on your device. Test some games and some features of the emulator. You'll probably notice a suboptimal performance. 
-0. Now, close the emulator. In the folder where your emulator build is, a `./profile` folder will have appeared with a bunch of `.gcda` files. Move those to the `powkiddy` or `bittboy` folder (depending on your device).
-0. In `Makefile`, change `-fprofile-generate=./profile` to `-fprofile-use=./`.
-0. Make a new build. If required, force a new build with `make -B`.
-0. Done! Enjoy your now device optimized emulator.
+The release `gpsp` binaries have been optimized with PGO by using manually generated *.gcda files. Use `PROFILE=YES` make flag to generate those at runtime, or `PROFILE=APPLY` to optimize your output build after profiling.
+
+### Debuging your build
+Use `DEBUG=YES` make flag in `./miyoo/Makefile` to output unstripped build with debug info. 
+For local PC testing there is `./x86/Makefile` which is only to be used within 32-bit platforms due to x86 assembly code. 

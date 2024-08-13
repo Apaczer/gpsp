@@ -1,7 +1,9 @@
 Package: gpsp
 Version: 1.2.2
-Description: gpSP - Game Boy Advance emulator from exophase
+Source: https://github.com/Apaczer/gpsp
+License: GPL-2.0
+Description: GameBoy Advance emulator with dynarec
 Section: emulators
 Priority: optional
-Maintainer: Apacz
+Maintainer: Apaczer
 Architecture: arm

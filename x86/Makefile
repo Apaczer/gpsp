@@ -15,7 +15,7 @@ BIN       ?= gpsp
 # Platform specific definitions 
 
 VPATH      += ..
-CFLAGS     += -DPC_BUILD -Wall -m32 -O0 -g
+CFLAGS     += -DPC_BUILD -Wall -m32 -O0 -g3
 INCLUDES   = `sdl-config --cflags`
 LIBS       = `sdl-config --libs` -lz -m32 -lpng
 
@@ -39,4 +39,3 @@ ${BIN}:	${OBJS}
 
 clean:
 	rm -f *.o ${BIN} 
-

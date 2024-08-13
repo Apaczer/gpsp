@@ -17,7 +17,12 @@ DESTDIR = emus
 SECTION = emulators
 ALIASES = aliases.txt
 
-CC        = /opt/miyoo/bin/arm-linux-gcc
+CHAINPREFIX ?= /opt/miyoo
+CROSS_COMPILE ?= $(CHAINPREFIX)/usr/bin/arm-linux-
+
+CC = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
+STRIP = $(CROSS_COMPILE)strip
 
 # Possible values : 0, YES, APPLY
 PROFILE ?= 0
@@ -27,13 +32,18 @@ OBJS      = main.o cpu.o memory.o video.o input.o sound.o gui.o \
 
 BIN       = $(TARGET)
 
-# Platform specific definitions 
+# Platform specific definitions
 
 VPATH      += .. ../arm
 CFLAGS     = -Ofast -fdata-sections -ffunction-sections -fsingle-precision-constant -fno-PIC -flto
 CFLAGS     += -DARM_ARCH -DMIYOO -Wall
-CFLAGS     += -march=armv5te -mtune=arm926ej-s `/opt/miyoo/arm-miyoo-linux-uclibcgnueabi/sysroot/usr/bin/sdl-config --cflags`
-LIBS       = -nodefaultlibs -lc -lgcc -lSDL -lpng -lasound -lz -Wl,--as-needed -Wl,--gc-sections -flto -s
+CFLAGS     += -march=armv5te -mtune=arm926ej-s $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
+PKG_LIBS   = $(shell $(SYSROOT)/../../usr/bin/pkg-config --libs sdl libpng zlib)
+LIBS       = -nodefaultlibs -lc -lgcc $(PKG_LIBS) -Wl,--as-needed -Wl,--gc-sections
+
+ifeq ($(DEBUG), YES)
+LIBS       += -g3
+endif
 
 ifeq ($(PROFILE), YES)
 LIBS       += -lgcov
@@ -47,21 +57,30 @@ endif
 
 # Compilation:
 
+.PHONY: config borders
+
 all: $(BIN)
 
 %.o: %.S
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-
 cpu.o cpu_threaded.o: CFLAGS += -Wno-unused-variable -Wno-unused-label
 
 $(BIN): $(OBJS)
 	$(CC) $(OBJS) $(LIBS) -o $(BIN) $(LDFLAGS)
+ifneq ($(DEBUG), YES)
+	$(STRIP) $(BIN)
+endif
 
 config:
 	@cat ../game_config.txt > $(ASSETSDIR)/game_config.txt
 
-package: all config
+borders:
+	@cp ../borders/* $(ASSETSDIR)
+#use one of overlays as default border for unscaled image
+	@mv $(ASSETSDIR)/border1.png $(ASSETSDIR)/border.png
+
+package: all config borders
 	@rm -rf $(RELEASEDIR)
 	@mkdir -p $(RELEASEDIR)
 	@cp *$(TARGET) $(RELEASEDIR)/
@@ -72,8 +91,6 @@ package: all config
 	@cp $(OPKG_ASSETSDIR)/$(LINK) $(RELEASEDIR)/gmenu2x/sections/$(SECTION)
 	@sed "s/^exec=.*/exec=\$(HOMEPATH)\/$(DESTDIR)\/$(TARGET)\/$(TARGET)/" $(OPKG_ASSETSDIR)/$(LINK) > $(RELEASEDIR)/gmenu2x/sections/$(SECTION)/$(LINK)
 	@cp $(OPKG_ASSETSDIR)/$(ALIASES) $(RELEASEDIR)/$(DESTDIR)/$(TARGET)
-#use one of overlays as default border for unscaled image
-	@cp ../borders/border1.png $(RELEASEDIR)/$(DESTDIR)/$(TARGET)/border.png
 
 zip: package
 	@cd $(RELEASEDIR) && zip -rq $(TARGET)$(VERSION).zip ./* && mv *.zip ..
@@ -96,6 +113,10 @@ ipk: package
 	@ar r $(TARGET).ipk $(RELEASEDIR)/control.tar.gz $(RELEASEDIR)/data.tar.gz $(RELEASEDIR)/debian-binary
 	@rm -rf $(RELEASEDIR)/*
 	mv $(TARGET).ipk $(RELEASEDIR)/
+
+gm2xpkg-ipk: all config borders
+	gm2xpkg -i pkg.cfg
+	rm $(TARGET).lnk
 
 clean:
 	rm -f *.o $(BIN)

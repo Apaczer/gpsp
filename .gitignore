@@ -7,8 +7,10 @@ gpsp.gpe
 tags
 cscope.out
 pandora/linux
+miyoo/gpsp.lnk
 miyoo/gpsp
 miyoo/assets/game_config.txt
+miyoo/assets/border*
 miyoo/package
 miyoo/*.zip
 miyoo/*.ipk
