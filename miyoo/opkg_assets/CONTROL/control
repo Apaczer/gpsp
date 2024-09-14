@@ -1,5 +1,5 @@
 Package: gpsp
-Version: 1.2.2
+Version: 1.2.3
 Source: https://github.com/Apaczer/gpsp
 License: GPL-2.0
 Description: GameBoy Advance emulator with dynarec

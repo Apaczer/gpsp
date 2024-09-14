@@ -10,7 +10,11 @@ An enhanced version of gpSP for low-level ARM devices.
 3. It is mandatory to include ``gba_bios.bin`` in working directory to make any ROM launch (emulator comes bundled with fake BIOS).
 
 ## Changelog
-### v1.2.1
+### v1.2.3
+#### Improvements
+- use newer GCC and revert to using staticly linked musl libraries for an output binary
+
+### v1.2.2
 #### Fixes
 - correct button mapping to accommodate for latest 2.0 CFW (universal aka PocketGO)
 
