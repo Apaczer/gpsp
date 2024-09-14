@@ -1,7 +1,6 @@
 *.o
 *.u
 *.z
-*.gcda
 *.gba
 gpsp.gpe
 tags

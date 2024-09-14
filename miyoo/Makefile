@@ -52,7 +52,7 @@ endif
 ifeq ($(PROFILE), YES)
 CFLAGS	+= -fprofile-generate=$(HOMEPATH)/profile
 else ifeq ($(PROFILE), APPLY)
-CFLAGS	+= -fprofile-use -fbranch-probabilities
+CFLAGS	+= -fprofile-use=./profile -fbranch-probabilities
 endif
 
 # Compilation:
