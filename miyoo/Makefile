@@ -23,6 +23,7 @@ CROSS_COMPILE ?= $(CHAINPREFIX)/usr/bin/arm-linux-
 CC = $(CROSS_COMPILE)gcc
 CXX = $(CROSS_COMPILE)g++
 STRIP = $(CROSS_COMPILE)strip
+SYSROOT ?= $(shell$(CC) --print-sysroot)
 
 # Possible values : 0, YES, APPLY
 PROFILE ?= 0
@@ -115,7 +116,7 @@ ipk: package
 	mv $(TARGET).ipk $(RELEASEDIR)/
 
 gm2xpkg-ipk: all config borders
-	gm2xpkg -i pkg.cfg
+	gm2xpkg -i -f pkg.cfg
 	rm $(TARGET).lnk
 
 clean:
